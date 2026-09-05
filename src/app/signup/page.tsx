@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { Suspense, useTransition } from "react";
 import Link from "next/link";
 import { signup } from "./actions";
 import PasswordInput from "@/components/ui/PasswordInput";
@@ -25,6 +25,14 @@ function FlowMark({ size = 30 }: { size?: number }) {
 }
 
 export default function SignupPage() {
+    return (
+        <Suspense fallback={null}>
+            <SignupPageInner />
+        </Suspense>
+    );
+}
+
+function SignupPageInner() {
     const searchParams = useSearchParams();
     const message = searchParams.get("message");
     const [isPending, startTransition] = useTransition();
