@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-warm-beige: #F5F0E6;
+    --bg-soft-sand: #E8DCC8;
+    --accent-indigo: #2C3E50;
+    --accent-muted-blue: #6B8CAE;
+    --accent-walnut: #5C4033;
+    --text-charcoal: #2B2320;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-warm-beige);
+    color: var(--text-charcoal);
+  }
+
+  body {
+    background-color: var(--bg-warm-beige);
+    color: var(--text-charcoal);
+    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Subtle fabric/linen weave pattern */
+.bg-weave {
+  background-color: #F5F0E6;
+  background-image: 
+    linear-gradient(90deg, rgba(92, 64, 51, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(92, 64, 51, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Tight woven pattern */
+.bg-weave-tight {
+  background-color: #E8DCC8;
+  background-image: 
+    linear-gradient(90deg, rgba(44, 62, 80, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(44, 62, 80, 0.04) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Beautiful custom selection highlight */
+::selection {
+  background-color: #E8DCC8;
+  color: #2C3E50;
+}
+
+/* Styled editorial scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F0E6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6B8CAE;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2C3E50;
+}
+
+/* Image zoom transition */
+.image-zoom-container img {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.image-zoom-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Custom animation classes */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Lightbox custom overrides for yet-another-react-lightbox */
+.yarl__container {
+  background-color: rgba(43, 35, 32, 0.95) !important;
+}
+
+.yarl__button {
+  color: #F5F0E6 !important;
+}
+
+.yarl__button:hover {
+  color: #E8DCC8 !important;
+}
