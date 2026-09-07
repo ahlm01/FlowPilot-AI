@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useId } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { LogOut, Inbox, BarChart3, Settings as SettingsIcon, User, Menu, X } from 'lucide-react'
@@ -13,10 +13,13 @@ const navItems = [
 ]
 
 function FlowMark({ size = 30 }: { size?: number }) {
+    // Unique per render so two FlowMarks on the same page (desktop sidebar +
+    // mobile top bar) never collide on the same gradient id.
+    const gradId = `flowGradSidebar-${useId()}`
     return (
         <svg width={size} height={size * 0.8} viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <linearGradient id="flowGradSidebar" x1="0" y1="1" x2="1" y2="0">
+                <linearGradient id={gradId} x1="0" y1="1" x2="1" y2="0">
                     <stop offset="0%" stopColor="#5b6ef5" />
                     <stop offset="100%" stopColor="#17b6d4" />
                 </linearGradient>
@@ -24,7 +27,7 @@ function FlowMark({ size = 30 }: { size?: number }) {
             <path
                 d="M20 120 C 55 120, 55 80, 90 80 C 125 80, 125 40, 160 40"
                 fill="none"
-                stroke="url(#flowGradSidebar)"
+                stroke={`url(#${gradId})`}
                 strokeWidth="9"
                 strokeLinecap="round"
             />
