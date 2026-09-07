@@ -55,7 +55,15 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
             background: 'white', borderRadius: '20px', padding: '28px',
             boxShadow: '0 12px 32px rgba(15,23,42,0.06)'
         }}>
-            <form action={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <div style={{ marginBottom: '4px' }}>
+                <h2 className="font-display" style={{ fontSize: '15px', fontWeight: 700, color: '#12162b', margin: 0 }}>
+                    Signature details
+                </h2>
+                <p style={{ fontSize: '13px', color: '#94a3c0', marginTop: '3px' }}>
+                    Used on AI-drafted follow-up emails sent to your leads.
+                </p>
+            </div>
+            <form action={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px', marginTop: '20px' }}>
                 <div>
                     <label style={labelStyle}>Full name</label>
                     <input name="full_name" defaultValue={initialSettings?.full_name ?? ''} placeholder="Ahlam Amjad" className="settings-input" style={inputStyle} />
@@ -93,18 +101,24 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
                 </div>
             </form>
 
-            <div style={{
-                marginTop: '24px', padding: '14px 16px', borderRadius: '12px',
-                background: '#fff7ed', border: '1px solid #fed7aa', fontSize: '13px', color: '#9a3412', lineHeight: 1.6
+            <div className="intake-card" style={{
+                marginTop: '28px', padding: '22px 24px', borderRadius: '16px',
+                background: 'linear-gradient(135deg, rgba(79,70,229,0.06), rgba(23,182,212,0.06))',
+                border: '1px solid rgba(79,70,229,0.14)'
             }}>
-                Note: this saves your signature info for future use in the app. Your n8n workflow's AI prompt
-                currently has the signature hardcoded — update that prompt separately if you want generated emails
-                to pull from here automatically.
-            </div>
-
-            <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid #eef0f8' }}>
-                <label style={labelStyle}>Your personal intake link</label>
-                <p style={{ fontSize: '13px', color: '#5b6382', margin: '0 0 12px', lineHeight: 1.5 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <span style={{
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                        width: '22px', height: '22px', borderRadius: '7px',
+                        background: 'linear-gradient(135deg, #4f46e5, #17b6d4)', flexShrink: 0
+                    }}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 0 6c.35 0 .69-.06 1-.17M6 12a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 0c.35 0 .69.06 1 .17m9 3.66c.31-.11.65-.17 1-.17a3 3 0 1 1-2.83 4M8.7 13.5l6.6-3.75m-6.6 6l6.6 3.75" />
+                        </svg>
+                    </span>
+                    <label style={{ ...labelStyle, margin: 0 }}>Your personal intake link</label>
+                </div>
+                <p style={{ fontSize: '13px', color: '#5b6382', margin: '0 0 14px', lineHeight: 1.5 }}>
                     Share this link with customers, or add it to your site — every submission comes straight into your Leads list, scoped to your account only.
                 </p>
                 <div style={{ display: 'flex', gap: '10px' }}>
@@ -113,7 +127,7 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
                         value={intakeLink}
                         placeholder="Loading your link…"
                         onFocus={(e) => e.currentTarget.select()}
-                        style={{ ...inputStyle, background: '#f7f8fc', color: '#12162b', fontSize: '13.5px' }}
+                        style={{ ...inputStyle, background: 'white', color: '#12162b', fontSize: '13.5px' }}
                     />
                     <button
                         type="button"

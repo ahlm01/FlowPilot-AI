@@ -20,11 +20,7 @@ function FlowMark({ size = 30 }: { size?: number }) {
 
 export default function CheckEmailPage() {
     return (
-        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f7f8fc", fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', padding: "24px" }}>
-            <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap');
-        .font-display { font-family: 'Space Grotesk', -apple-system, sans-serif; }
-      `}</style>
+        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f7f8fc", padding: "24px" }}>
             <div style={{
                 maxWidth: "420px", width: "100%", background: "white", borderRadius: "20px",
                 padding: "40px 36px", textAlign: "center", boxShadow: "0 12px 32px rgba(15,23,42,0.08)"

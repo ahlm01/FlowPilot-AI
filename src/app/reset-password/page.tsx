@@ -46,10 +46,8 @@ export default function ResetPasswordPage() {
     };
 
     return (
-        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f7f8fc", fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', padding: "24px" }}>
+        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f7f8fc", padding: "24px" }}>
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap');
-        .font-display { font-family: 'Space Grotesk', -apple-system, sans-serif; }
         .rp-input { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
         .rp-input:hover { border-color: #c7ccf0; }
         .rp-input:focus { border-color: #5b6ef5; box-shadow: 0 0 0 4px rgba(91,110,245,0.12); outline: none; }

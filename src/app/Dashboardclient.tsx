@@ -172,11 +172,8 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
     const areaPath = `${linePath} L ${chartW} ${chartH} L 0 ${chartH} Z`
 
     return (
-        <div className="app-bg" style={{ minHeight: '100vh', color: '#12162b', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', display: 'flex' }}>
+        <div className="app-bg" style={{ minHeight: '100vh', color: '#12162b', display: 'flex' }}>
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@600;700&display=swap');
-        .font-display { font-family: 'Space Grotesk', -apple-system, sans-serif; }
-        .font-data { font-family: 'JetBrains Mono', ui-monospace, monospace; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }

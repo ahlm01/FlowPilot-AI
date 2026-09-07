@@ -75,10 +75,8 @@ export default function IntakeFormPage() {
     };
 
     return (
-        <div style={{ minHeight: "100vh", background: "#f7f8fc", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px", fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <div style={{ minHeight: "100vh", background: "#f7f8fc", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px" }}>
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap');
-        .font-display { font-family: 'Space Grotesk', -apple-system, sans-serif; }
         .intake-input:focus { border-color: #5b6ef5 !important; box-shadow: 0 0 0 3px rgba(91,110,245,0.12); }
         .intake-btn { transition: transform 0.15s ease, box-shadow 0.2s ease; }
         .intake-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(79,70,229,0.3); }

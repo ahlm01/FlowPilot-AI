@@ -44,11 +44,8 @@ function SignupPageInner() {
     }
 
     return (
-        <div style={{ minHeight: "100vh", width: "100%", position: "relative", overflow: "hidden", background: "#ffffff", fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <div style={{ minHeight: "100vh", width: "100%", position: "relative", overflow: "hidden", background: "#ffffff" }}>
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
-        .font-display { font-family: 'Space Grotesk', -apple-system, sans-serif; }
-
         @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
 

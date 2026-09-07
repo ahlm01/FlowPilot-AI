@@ -2,105 +2,57 @@
 
 @layer base {
   :root {
-    --bg-warm-beige: #F5F0E6;
-    --bg-soft-sand: #E8DCC8;
-    --accent-indigo: #2C3E50;
-    --accent-muted-blue: #6B8CAE;
-    --accent-walnut: #5C4033;
-    --text-charcoal: #2B2320;
+    --bg-app: #f4f5fb;
+    --text-ink: #12162b;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: var(--bg-warm-beige);
-    color: var(--text-charcoal);
+    background-color: var(--bg-app);
+    color: var(--text-ink);
   }
 
   body {
-    background-color: var(--bg-warm-beige);
-    color: var(--text-charcoal);
-    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-ink);
+    font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Subtle fabric/linen weave pattern */
-.bg-weave {
-  background-color: #F5F0E6;
-  background-image: 
-    linear-gradient(90deg, rgba(92, 64, 51, 0.03) 1px, transparent 1px),
-    linear-gradient(rgba(92, 64, 51, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Shared display-face utility — used for headings across the app */
+.font-display {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
-/* Tight woven pattern */
-.bg-weave-tight {
-  background-color: #E8DCC8;
-  background-image: 
-    linear-gradient(90deg, rgba(44, 62, 80, 0.04) 1px, transparent 1px),
-    linear-gradient(rgba(44, 62, 80, 0.04) 1px, transparent 1px);
-  background-size: 8px 8px;
+/* Shared tabular/mono-numeral utility — used for stat & metric figures */
+.font-data {
+  font-family: var(--font-mono), ui-monospace, monospace;
 }
 
-/* Beautiful custom selection highlight */
+/* Brand-matched text selection highlight */
 ::selection {
-  background-color: #E8DCC8;
-  color: #2C3E50;
+  background-color: rgba(91, 110, 245, 0.18);
+  color: #12162b;
 }
 
-/* Styled editorial scrollbar */
+/* Slim brand-matched scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5F0E6;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6B8CAE;
-  border-radius: 0px;
+  background: #d8dcf3;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2C3E50;
-}
-
-/* Image zoom transition */
-.image-zoom-container img {
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.image-zoom-container:hover img {
-  transform: scale(1.05);
-}
-
-/* Custom animation classes */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-up {
-  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Lightbox custom overrides for yet-another-react-lightbox */
-.yarl__container {
-  background-color: rgba(43, 35, 32, 0.95) !important;
-}
-
-.yarl__button {
-  color: #F5F0E6 !important;
-}
-
-.yarl__button:hover {
-  color: #E8DCC8 !important;
+  background: #a9b1e8;
 }

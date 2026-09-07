@@ -21,11 +21,8 @@ export default async function SettingsPage() {
         .maybeSingle()
 
     return (
-        <div className="app-bg" style={{ minHeight: '100vh', display: 'flex', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <div className="app-bg" style={{ minHeight: '100vh', display: 'flex' }}>
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap');
-        .font-display { font-family: 'Space Grotesk', -apple-system, sans-serif; }
-
         @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
 
@@ -60,7 +57,7 @@ export default async function SettingsPage() {
                     Settings
                 </h1>
                 <p className="fade-up" style={{ animationDelay: '60ms', color: '#5b6382', fontSize: '14px', marginBottom: '28px' }}>
-                    This information is used as your signature on AI-drafted follow-up emails.
+                    Manage your account details and lead intake link.
                 </p>
 
                 <SettingsForm initialSettings={settings} userId={user.id} />
