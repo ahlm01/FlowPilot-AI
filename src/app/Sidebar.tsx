@@ -22,15 +22,16 @@ function FlowMark({ size = 30 }: { size?: number }) {
                 </linearGradient>
             </defs>
             <path
-                d="M20 120 C 55 120, 55 80, 90 80 C 125 80, 125 40, 160 40"
+                d="M35 128 L100 92 L165 38"
                 fill="none"
                 stroke="url(#flowGradSidebar)"
-                strokeWidth="9"
+                strokeWidth="15"
                 strokeLinecap="round"
+                strokeLinejoin="round"
             />
-            <circle cx="20" cy="120" r="13" fill="#5b6ef5" />
-            <circle cx="90" cy="80" r="15" fill="#3aa0e0" />
-            <circle cx="160" cy="40" r="13" fill="#17b6d4" />
+            <circle cx="35" cy="128" r="15" fill="#5b6ef5" />
+            <circle cx="100" cy="92" r="12" fill="#3aa0e0" />
+            <circle cx="165" cy="38" r="15" fill="#17b6d4" />
         </svg>
     )
 }
