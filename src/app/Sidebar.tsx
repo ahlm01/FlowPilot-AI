@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { LogOut, Inbox, BarChart3, Settings as SettingsIcon, User } from 'lucide-react'
+import { LogOut, Inbox, BarChart3, Settings as SettingsIcon, User, Menu, X } from 'lucide-react'
 
 const navItems = [
     { label: 'Leads', href: '/', icon: Inbox },
@@ -11,9 +12,9 @@ const navItems = [
     { label: 'Profile', href: '/profile', icon: User },
 ]
 
-function FlowMark() {
+function FlowMark({ size = 30 }: { size?: number }) {
     return (
-        <svg width="30" height="24" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+        <svg width={size} height={size * 0.8} viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="flowGradSidebar" x1="0" y1="1" x2="1" y2="0">
                     <stop offset="0%" stopColor="#5b6ef5" />
@@ -36,6 +37,7 @@ function FlowMark() {
 
 export default function Sidebar() {
     const pathname = usePathname()
+    const [mobileOpen, setMobileOpen] = useState(false)
 
     return (
         <>
@@ -67,17 +69,65 @@ export default function Sidebar() {
         .logo-mark:hover {
           transform: scale(1.08);
         }
+        .mobile-menu-btn {
+          transition: background 0.15s ease;
+        }
+        .mobile-menu-btn:hover {
+          background: #f5f7ff !important;
+        }
       `}</style>
-            <aside style={{
+
+            {/* Mobile-only top bar with hamburger toggle */}
+            <header className="mobile-topbar">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+                    <FlowMark size={22} />
+                    <span className="font-display" style={{ fontWeight: 700, fontSize: '15.5px', letterSpacing: '-0.02em' }}>FlowPilot</span>
+                </div>
+                <button
+                    type="button"
+                    className="mobile-menu-btn"
+                    onClick={() => setMobileOpen(true)}
+                    aria-label="Open menu"
+                    style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        width: '36px', height: '36px', borderRadius: '10px', border: 'none',
+                        background: 'transparent', color: '#334155', cursor: 'pointer'
+                    }}
+                >
+                    <Menu size={20} />
+                </button>
+            </header>
+
+            {/* Backdrop shown behind the drawer on mobile */}
+            {mobileOpen && (
+                <div className="sidebar-backdrop" onClick={() => setMobileOpen(false)} />
+            )}
+
+            <aside className={`app-sidebar${mobileOpen ? ' mobile-open' : ''}`} style={{
                 width: '240px', flexShrink: 0, background: 'white', borderRight: '1px solid #eef0f6',
                 display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'sticky', top: 0, height: '100vh'
             }}>
                 <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '22px 22px 24px' }}>
-                        <div className="logo-mark">
-                            <FlowMark />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '22px 22px 24px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <div className="logo-mark">
+                                <FlowMark />
+                            </div>
+                            <span className="font-display" style={{ fontWeight: 700, fontSize: '16.5px', letterSpacing: '-0.02em' }}>FlowPilot</span>
                         </div>
-                        <span className="font-display" style={{ fontWeight: 700, fontSize: '16.5px', letterSpacing: '-0.02em' }}>FlowPilot</span>
+                        <button
+                            type="button"
+                            className="mobile-menu-btn mobile-only-close"
+                            onClick={() => setMobileOpen(false)}
+                            aria-label="Close menu"
+                            style={{
+                                display: 'none', alignItems: 'center', justifyContent: 'center',
+                                width: '32px', height: '32px', borderRadius: '9px', border: 'none',
+                                background: 'transparent', color: '#94a3c0', cursor: 'pointer'
+                            }}
+                        >
+                            <X size={18} />
+                        </button>
                     </div>
 
                     <nav style={{ padding: '4px 12px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
@@ -88,6 +138,7 @@ export default function Sidebar() {
                                     key={item.label}
                                     href={item.href}
                                     className="nav-item"
+                                    onClick={() => setMobileOpen(false)}
                                     style={{
                                         display: 'flex', alignItems: 'center', gap: '10px',
                                         padding: '10px 12px', borderRadius: '10px', fontSize: '14px', fontWeight: 600,

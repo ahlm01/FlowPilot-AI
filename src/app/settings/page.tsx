@@ -52,7 +52,7 @@ export default async function SettingsPage() {
         .pop-in { animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
       `}</style>
             <Sidebar />
-            <main style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '760px', margin: '0 auto' }}>
+            <main className="app-main" style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '760px', margin: '0 auto' }}>
                 <h1 className="font-display fade-up" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '6px', color: '#12162b' }}>
                     Settings
                 </h1>

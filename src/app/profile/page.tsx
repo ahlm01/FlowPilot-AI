@@ -40,7 +40,7 @@ export default async function ProfilePage() {
         .profile-card:hover .avatar-ring { transform: scale(1.08) rotate(-4deg); }
       `}</style>
             <Sidebar />
-            <main style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '760px', margin: '0 auto' }}>
+            <main className="app-main" style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '760px', margin: '0 auto' }}>
                 <h1 className="font-display fade-up" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px', color: '#12162b' }}>
                     Profile
                 </h1>

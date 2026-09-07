@@ -79,7 +79,7 @@ export default function AnalyticsClient({ leads }: { leads: Lead[] }) {
 
     return (
         <div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '20px' }}>
+            <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '20px' }}>
                 <div className="stat-card fade-up" style={{ ...cardStyle, animationDelay: '80ms' }}>
                     <p style={{ fontSize: '11.5px', color: '#94a3c0', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.03em', marginBottom: '6px' }}>
                         Total Leads

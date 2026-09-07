@@ -52,7 +52,7 @@ export default async function AnalyticsPage() {
         .priority-fill { transition: width 0.9s cubic-bezier(0.16,1,0.3,1); }
       `}</style>
             <Sidebar />
-            <main style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '1000px', margin: '0 auto' }}>
+            <main className="app-main" style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '1000px', margin: '0 auto' }}>
                 <h1 className="font-display fade-up" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '6px', color: '#12162b' }}>
                     Analytics
                 </h1>

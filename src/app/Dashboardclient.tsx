@@ -260,7 +260,7 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
             <Sidebar />
 
             {/* Main content */}
-            <main style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '1120px', margin: '0 auto' }}>
+            <main className="app-main" style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '1120px', margin: '0 auto' }}>
 
                 {/* Topbar */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '26px', gap: '16px' }}>
@@ -318,7 +318,7 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
                 </div>
 
                 {/* Stat cards */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '20px' }}>
+                <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '20px' }}>
                     {[
                         { label: 'Total Leads', value: totalLeads, icon: Users, grad: 'linear-gradient(135deg,#4f46e5,#818cf8)' },
                         { label: 'High Priority', value: highPriority, icon: AlertTriangle, grad: 'linear-gradient(135deg,#f43f5e,#fb7185)' },

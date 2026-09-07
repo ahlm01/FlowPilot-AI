@@ -56,3 +56,82 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #a9b1e8;
 }
+
+/* ============================================================
+   Responsive app shell — sidebar collapses into a slide-in
+   drawer (triggered by the mobile top bar) below 768px, and
+   the main content reflows to fit narrow screens.
+   ============================================================ */
+
+.mobile-topbar {
+  display: none;
+}
+
+@keyframes sidebarOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 767px) {
+  .mobile-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 58px;
+    padding: 0 18px;
+    background: white;
+    border-bottom: 1px solid #eef0f6;
+    z-index: 70;
+  }
+
+  .app-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100vh !important;
+    width: 240px !important;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 80;
+    box-shadow: 0 0 0 transparent;
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 20px 0 44px rgba(15, 23, 42, 0.18);
+  }
+
+  .mobile-only-close {
+    display: flex !important;
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 75;
+    animation: sidebarOverlayIn 0.2s ease;
+  }
+
+  .app-main {
+    padding: 78px 16px 32px !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Stat-card style grids collapse from 3–4 columns down to fit narrow screens */
+@media (max-width: 860px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
