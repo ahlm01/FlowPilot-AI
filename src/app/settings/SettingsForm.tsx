@@ -42,24 +42,24 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
     }
 
     const inputStyle: React.CSSProperties = {
-        width: '100%', boxSizing: 'border-box', borderRadius: '12px', border: '1.5px solid #e7e9f5',
-        background: 'white', padding: '11px 14px', fontSize: '14px', outline: 'none', color: '#12162b'
+        width: '100%', boxSizing: 'border-box', borderRadius: '12px', border: '1.5px solid var(--border)',
+        background: 'var(--surface)', padding: '11px 14px', fontSize: '14px', outline: 'none', color: 'var(--text-primary)'
     }
     const labelStyle: React.CSSProperties = {
-        display: 'block', fontSize: '12.5px', fontWeight: 600, color: '#5b6382', marginBottom: '6px'
+        display: 'block', fontSize: '12.5px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px'
     }
 
     return (
         <div className="fade-up" style={{
             animationDelay: '140ms',
-            background: 'white', borderRadius: '20px', padding: '28px',
-            boxShadow: '0 12px 32px rgba(15,23,42,0.06)'
+            background: 'var(--surface)', borderRadius: '20px', padding: '28px',
+            boxShadow: 'var(--card-shadow)'
         }}>
             <div style={{ marginBottom: '4px' }}>
-                <h2 className="font-display" style={{ fontSize: '15px', fontWeight: 700, color: '#12162b', margin: 0 }}>
+                <h2 className="font-display" style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
                     Signature details
                 </h2>
-                <p style={{ fontSize: '13px', color: '#94a3c0', marginTop: '3px' }}>
+                <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '3px' }}>
                     Used on AI-drafted follow-up emails sent to your leads.
                 </p>
             </div>
@@ -118,7 +118,7 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
                     </span>
                     <label style={{ ...labelStyle, margin: 0 }}>Your personal intake link</label>
                 </div>
-                <p style={{ fontSize: '13px', color: '#5b6382', margin: '0 0 14px', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '0 0 14px', lineHeight: 1.5 }}>
                     Share this link with customers, or add it to your site — every submission comes straight into your Leads list, scoped to your account only.
                 </p>
                 <div style={{ display: 'flex', gap: '10px' }}>
@@ -127,7 +127,7 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
                         value={intakeLink}
                         placeholder="Loading your link…"
                         onFocus={(e) => e.currentTarget.select()}
-                        style={{ ...inputStyle, background: 'white', color: '#12162b', fontSize: '13.5px' }}
+                        style={{ ...inputStyle, fontSize: '13.5px' }}
                     />
                     <button
                         type="button"

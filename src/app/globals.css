@@ -2,23 +2,92 @@
 
 @layer base {
   :root {
+    /* Light theme (default) */
     --bg-app: #f4f5fb;
-    --text-ink: #12162b;
+    --surface: #ffffff;
+    --surface-alt: #fafbfe;
+    --text-primary: #12162b;
+    --text-secondary: #5b6382;
+    --text-muted: #94a3c0;
+    --border: #e7e9f5;
+    --border-soft: #eef0f6;
+    --accent-tint: #eef1ff;
+    --accent-tint-strong: #f5f7ff;
+    --accent-text: #4f46e5;
+    --card-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+    --scrollbar-thumb: #d8dcf3;
+    --scrollbar-thumb-hover: #a9b1e8;
+
+    /* Status/priority/score badge colors (Leads table + modal) */
+    --badge-danger-bg: #fee2e2;
+    --badge-danger-fg: #be123c;
+    --badge-danger-dot: #f43f5e;
+    --badge-warning-bg: #ffedd5;
+    --badge-warning-fg: #c2410c;
+    --badge-warning-dot: #f97316;
+    --badge-neutral-bg: #eef0f6;
+    --badge-neutral-fg: #5b6382;
+    --badge-neutral-dot: #94a3c0;
+    --badge-success-bg: #d1fae5;
+    --badge-success-fg: #047857;
+    --badge-info-bg: #e0f7fb;
+    --badge-info-fg: #0e7f96;
+
+    /* kept for any old references */
+    --text-ink: var(--text-primary);
+  }
+
+  /* Dark theme — applied when <html data-theme="dark"> */
+  :root[data-theme="dark"] {
+    --bg-app: #0e0f16;
+    --surface: #171922;
+    --surface-alt: #1d1f2b;
+    --text-primary: #eef0fa;
+    --text-secondary: #a6acc9;
+    --text-muted: #6f7594;
+    --border: #2b2e3d;
+    --border-soft: #23252f;
+    --accent-tint: rgba(91, 110, 245, 0.16);
+    --accent-tint-strong: rgba(91, 110, 245, 0.1);
+    --accent-text: #97a1ff;
+    --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --scrollbar-thumb: #363a4d;
+    --scrollbar-thumb-hover: #4a4f68;
+
+    --badge-danger-bg: rgba(244, 63, 94, 0.16);
+    --badge-danger-fg: #fca5b1;
+    --badge-danger-dot: #fb7185;
+    --badge-warning-bg: rgba(249, 115, 22, 0.16);
+    --badge-warning-fg: #fdba74;
+    --badge-warning-dot: #fb923c;
+    --badge-neutral-bg: rgba(255, 255, 255, 0.06);
+    --badge-neutral-fg: #a6acc9;
+    --badge-neutral-dot: #8890b5;
+    --badge-success-bg: rgba(16, 185, 129, 0.16);
+    --badge-success-fg: #6ee7b7;
+    --badge-info-bg: rgba(23, 182, 212, 0.16);
+    --badge-info-fg: #67e8f9;
   }
 
   html {
     scroll-behavior: smooth;
     background-color: var(--bg-app);
-    color: var(--text-ink);
+    color: var(--text-primary);
   }
 
   body {
     background-color: var(--bg-app);
-    color: var(--text-ink);
+    color: var(--text-primary);
     font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+
+/* Smooth, non-jarring transition when switching themes */
+body, .app-bg, .app-sidebar, .mobile-topbar,
+[class*="card"], input, textarea, button {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Shared display-face utility — used for headings across the app */
@@ -35,7 +104,7 @@
 /* Brand-matched text selection highlight */
 ::selection {
   background-color: rgba(91, 110, 245, 0.18);
-  color: #12162b;
+  color: var(--text-primary);
 }
 
 /* Slim brand-matched scrollbar */
@@ -49,12 +118,47 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d8dcf3;
+  background: var(--scrollbar-thumb);
   border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a9b1e8;
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* ============================================================
+   Shared app background — the soft dotted/glow wash behind the
+   sidebar-driven pages (Leads, Analytics, Settings, Profile).
+   Centralized here instead of duplicated per page so dark mode
+   only needs one override.
+   ============================================================ */
+.app-bg {
+  background-color: var(--bg-app);
+  background-image:
+    radial-gradient(circle at 8% 10%, rgba(91, 110, 245, 0.16) 0%, transparent 42%),
+    radial-gradient(circle at 96% 6%, rgba(23, 182, 212, 0.14) 0%, transparent 40%),
+    radial-gradient(circle at 45% 100%, rgba(167, 139, 250, 0.12) 0%, transparent 48%),
+    radial-gradient(circle, #cfd4ea 1.4px, transparent 1.4px);
+  background-size: auto, auto, auto, 20px 20px;
+}
+
+:root[data-theme="dark"] .app-bg {
+  background-image:
+    radial-gradient(circle at 8% 10%, rgba(91, 110, 245, 0.22) 0%, transparent 42%),
+    radial-gradient(circle at 96% 6%, rgba(23, 182, 212, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 45% 100%, rgba(167, 139, 250, 0.16) 0%, transparent 48%),
+    radial-gradient(circle, #2b2e42 1.4px, transparent 1.4px);
+  background-size: auto, auto, auto, 20px 20px;
+}
+
+/* ============================================================
+   Theme toggle button (sidebar)
+   ============================================================ */
+.theme-toggle-btn {
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.theme-toggle-btn:hover {
+  background: var(--accent-tint-strong) !important;
 }
 
 /* ============================================================
@@ -83,8 +187,8 @@
     right: 0;
     height: 58px;
     padding: 0 18px;
-    background: white;
-    border-bottom: 1px solid #eef0f6;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-soft);
     z-index: 70;
   }
 

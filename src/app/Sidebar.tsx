@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useId } from 'react'
+import { useState, useId, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { LogOut, Inbox, BarChart3, Settings as SettingsIcon, User, Menu, X } from 'lucide-react'
+import { LogOut, Inbox, BarChart3, Settings as SettingsIcon, User, Menu, X, Sun, Moon } from 'lucide-react'
 
 const navItems = [
     { label: 'Leads', href: '/', icon: Inbox },
@@ -41,6 +41,26 @@ function FlowMark({ size = 30 }: { size?: number }) {
 export default function Sidebar() {
     const pathname = usePathname()
     const [mobileOpen, setMobileOpen] = useState(false)
+    // null until mounted, so we never render a toggle state that could
+    // mismatch the theme the blocking init script already applied.
+    const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
+
+    useEffect(() => {
+        const current = document.documentElement.getAttribute('data-theme')
+        setTheme(current === 'dark' ? 'dark' : 'light')
+    }, [])
+
+    function toggleTheme() {
+        const next = theme === 'dark' ? 'light' : 'dark'
+        setTheme(next)
+        document.documentElement.setAttribute('data-theme', next)
+        try {
+            localStorage.setItem('flowpilot-theme', next)
+        } catch {
+            // localStorage unavailable (private browsing, etc.) — theme just
+            // won't persist across visits, which is fine.
+        }
+    }
 
     return (
         <>
@@ -50,7 +70,7 @@ export default function Sidebar() {
           transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
         }
         .nav-item:hover {
-          background: #f5f7ff !important;
+          background: var(--accent-tint-strong) !important;
           transform: translateX(2px);
         }
         .nav-item .nav-icon {
@@ -63,7 +83,7 @@ export default function Sidebar() {
           transition: background 0.18s ease, color 0.18s ease;
         }
         .signout-btn:hover {
-          background: #fef2f2 !important;
+          background: rgba(225, 29, 72, 0.12) !important;
           color: #e11d48 !important;
         }
         .logo-mark {
@@ -76,7 +96,7 @@ export default function Sidebar() {
           transition: background 0.15s ease;
         }
         .mobile-menu-btn:hover {
-          background: #f5f7ff !important;
+          background: var(--accent-tint-strong) !important;
         }
       `}</style>
 
@@ -94,7 +114,7 @@ export default function Sidebar() {
                     style={{
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         width: '36px', height: '36px', borderRadius: '10px', border: 'none',
-                        background: 'transparent', color: '#334155', cursor: 'pointer'
+                        background: 'transparent', color: 'var(--text-primary)', cursor: 'pointer'
                     }}
                 >
                     <Menu size={20} />
@@ -107,7 +127,7 @@ export default function Sidebar() {
             )}
 
             <aside className={`app-sidebar${mobileOpen ? ' mobile-open' : ''}`} style={{
-                width: '240px', flexShrink: 0, background: 'white', borderRight: '1px solid #eef0f6',
+                width: '240px', flexShrink: 0, background: 'var(--surface)', borderRight: '1px solid var(--border-soft)',
                 display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'sticky', top: 0, height: '100vh'
             }}>
                 <div>
@@ -126,7 +146,7 @@ export default function Sidebar() {
                             style={{
                                 display: 'none', alignItems: 'center', justifyContent: 'center',
                                 width: '32px', height: '32px', borderRadius: '9px', border: 'none',
-                                background: 'transparent', color: '#94a3c0', cursor: 'pointer'
+                                background: 'transparent', color: 'var(--text-muted)', cursor: 'pointer'
                             }}
                         >
                             <X size={18} />
@@ -145,8 +165,8 @@ export default function Sidebar() {
                                     style={{
                                         display: 'flex', alignItems: 'center', gap: '10px',
                                         padding: '10px 12px', borderRadius: '10px', fontSize: '14px', fontWeight: 600,
-                                        color: active ? '#4f46e5' : '#5b6382',
-                                        background: active ? '#eef1ff' : 'transparent',
+                                        color: active ? 'var(--accent-text)' : 'var(--text-secondary)',
+                                        background: active ? 'var(--accent-tint)' : 'transparent',
                                         textDecoration: 'none'
                                     }}
                                 >
@@ -158,11 +178,24 @@ export default function Sidebar() {
                     </nav>
                 </div>
 
-                <div style={{ padding: '16px', borderTop: '1px solid #eef0f6' }}>
+                <div style={{ padding: '16px', borderTop: '1px solid var(--border-soft)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <button
+                        type="button"
+                        onClick={toggleTheme}
+                        className="theme-toggle-btn"
+                        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                        style={{
+                            width: '100%', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', fontWeight: 600,
+                            color: 'var(--text-muted)', background: 'transparent', border: 'none', cursor: 'pointer', padding: '9px 10px', borderRadius: '10px'
+                        }}
+                    >
+                        {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+                        {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+                    </button>
                     <form action="/auth/signout" method="post">
                         <button type="submit" className="signout-btn" style={{
                             width: '100%', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', fontWeight: 600,
-                            color: '#94a3c0', background: 'transparent', border: 'none', cursor: 'pointer', padding: '9px 10px', borderRadius: '10px'
+                            color: 'var(--text-muted)', background: 'transparent', border: 'none', cursor: 'pointer', padding: '9px 10px', borderRadius: '10px'
                         }}>
                             <LogOut size={14} /> Sign out
                         </button>

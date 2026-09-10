@@ -39,20 +39,20 @@ export function CustomSelect({
                 onClick={() => setOpen((o) => !o)}
                 style={{
                     display: 'flex', alignItems: 'center', gap: '8px',
-                    fontSize: '13px', border: '1.5px solid #e7e9f5', borderRadius: '10px',
-                    padding: '8px 14px', background: '#fafbfe', color: '#334155',
+                    fontSize: '13px', border: '1.5px solid var(--border)', borderRadius: '10px',
+                    padding: '8px 14px', background: 'var(--surface-alt)', color: 'var(--text-primary)',
                     cursor: 'pointer', fontWeight: 500, minWidth: '130px', justifyContent: 'space-between'
                 }}
             >
                 {value}
-                <ChevronDown size={14} color="#94a3c0" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.15s ease' }} />
+                <ChevronDown size={14} color="var(--text-muted)" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.15s ease' }} />
             </button>
 
             {open && (
                 <div style={{
                     position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 20,
-                    background: 'white', borderRadius: '12px', border: '1px solid #e7e9f5',
-                    boxShadow: '0 12px 28px rgba(15,23,42,0.12)', overflow: 'hidden', padding: '4px'
+                    background: 'var(--surface)', borderRadius: '12px', border: '1px solid var(--border)',
+                    boxShadow: 'var(--card-shadow)', overflow: 'hidden', padding: '4px'
                 }}>
                     {options.map((opt) => (
                         <div
@@ -60,11 +60,11 @@ export function CustomSelect({
                             onClick={() => { onChange(opt); setOpen(false) }}
                             style={{
                                 padding: '9px 12px', fontSize: '13.5px', fontWeight: 500, borderRadius: '8px',
-                                cursor: 'pointer', color: opt === value ? '#4f46e5' : '#334155',
-                                background: opt === value ? '#eef1ff' : 'transparent',
+                                cursor: 'pointer', color: opt === value ? 'var(--accent-text)' : 'var(--text-primary)',
+                                background: opt === value ? 'var(--accent-tint)' : 'transparent',
                                 transition: 'background 0.12s ease'
                             }}
-                            onMouseEnter={(e) => { if (opt !== value) e.currentTarget.style.background = '#f5f7ff' }}
+                            onMouseEnter={(e) => { if (opt !== value) e.currentTarget.style.background = 'var(--accent-tint-strong)' }}
                             onMouseLeave={(e) => { if (opt !== value) e.currentTarget.style.background = 'transparent' }}
                         >
                             {opt}

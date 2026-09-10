@@ -52,6 +52,9 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(function 
                 style={{
                     position: 'absolute', right: '13px', top: '50%', transform: 'translateY(-50%)',
                     background: 'none', border: 'none', padding: '2px', cursor: 'pointer',
+                    // Kept as a fixed neutral gray (not a theme variable) since this
+                    // component is shared with the always-light auth pages — a
+                    // dashboard dark-mode toggle must not bleed into login/signup.
                     color: '#8a90ab', display: 'flex', alignItems: 'center', lineHeight: 0
                 }}
             >

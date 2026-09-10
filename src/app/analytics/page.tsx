@@ -25,16 +25,6 @@ export default async function AnalyticsPage() {
         @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
 
-        .app-bg {
-          background-color: #f4f5fb;
-          background-image:
-            radial-gradient(circle at 8% 10%, rgba(91,110,245,0.16) 0%, transparent 42%),
-            radial-gradient(circle at 96% 6%, rgba(23,182,212,0.14) 0%, transparent 40%),
-            radial-gradient(circle at 45% 100%, rgba(167,139,250,0.12) 0%, transparent 48%),
-            radial-gradient(circle, #cfd4ea 1.4px, transparent 1.4px);
-          background-size: auto, auto, auto, 20px 20px;
-        }
-
         .stat-card { transition: transform 0.25s ease, box-shadow 0.25s ease; position: relative; }
         .stat-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 20px 40px rgba(79, 70, 229, 0.12); }
         .stat-card::after {
@@ -53,10 +43,10 @@ export default async function AnalyticsPage() {
       `}</style>
             <Sidebar />
             <main className="app-main" style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '1000px', margin: '0 auto' }}>
-                <h1 className="font-display fade-up" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '6px', color: '#12162b' }}>
+                <h1 className="font-display fade-up" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '6px', color: 'var(--text-primary)' }}>
                     Analytics
                 </h1>
-                <p className="fade-up" style={{ animationDelay: '60ms', color: '#5b6382', fontSize: '14px', marginBottom: '24px' }}>
+                <p className="fade-up" style={{ animationDelay: '60ms', color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '24px' }}>
                     Real numbers from your lead pipeline.
                 </p>
 

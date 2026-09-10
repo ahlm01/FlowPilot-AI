@@ -27,6 +27,20 @@ export const metadata: Metadata = {
   description: "AI-qualified leads, ranked and ready for follow-up.",
 };
 
+// Runs synchronously before paint so the correct theme is applied
+// immediately — no flash of the wrong theme while React hydrates.
+const themeInitScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem('flowpilot-theme');
+    var theme = stored === 'light' || stored === 'dark'
+      ? stored
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -34,6 +48,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`h-full scroll-smooth antialiased ${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

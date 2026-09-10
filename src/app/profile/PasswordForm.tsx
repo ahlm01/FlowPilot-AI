@@ -21,12 +21,12 @@ export default function PasswordForm() {
     }
 
     const inputStyle: React.CSSProperties = {
-        width: '100%', boxSizing: 'border-box', borderRadius: '12px', border: '1.5px solid #e7e9f5',
-        background: 'white', padding: '11px 14px', fontSize: '14px', outline: 'none', color: '#12162b',
+        width: '100%', boxSizing: 'border-box', borderRadius: '12px', border: '1.5px solid var(--border)',
+        background: 'var(--surface)', padding: '11px 14px', fontSize: '14px', outline: 'none', color: 'var(--text-primary)',
         transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
     }
     const labelStyle: React.CSSProperties = {
-        display: 'block', fontSize: '12.5px', fontWeight: 600, color: '#5b6382', marginBottom: '6px'
+        display: 'block', fontSize: '12.5px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px'
     }
 
     return (
