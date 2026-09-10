@@ -43,9 +43,9 @@ export default function AnalyticsClient({ leads }: { leads: Lead[] }) {
     const conversionRate = total > 0 ? Math.round((sent / total) * 100) : 0
 
     const buckets = [
-        { label: '0–49', min: 0, max: 49, color: '#94a3c0' },
-        { label: '50–79', min: 50, max: 79, color: '#f97316' },
-        { label: '80–100', min: 80, max: 100, color: '#10b981' },
+        { label: '0–49', min: 0, max: 49, color: '#94a3c0', grad: 'linear-gradient(180deg, #b4bcdd, #94a3c0)' },
+        { label: '50–79', min: 50, max: 79, color: '#f97316', grad: 'linear-gradient(180deg, #fb923c, #f97316)' },
+        { label: '80–100', min: 80, max: 100, color: '#10b981', grad: 'linear-gradient(180deg, #34d399, #10b981)' },
     ]
     const scoreCounts = buckets.map((b) => ({
         ...b,
@@ -54,9 +54,9 @@ export default function AnalyticsClient({ leads }: { leads: Lead[] }) {
     const maxScoreCount = Math.max(1, ...scoreCounts.map((b) => b.count))
 
     const priorities = [
-        { label: 'High', color: '#f43f5e' },
-        { label: 'Medium', color: '#f97316' },
-        { label: 'Low', color: '#94a3c0' },
+        { label: 'High', color: '#f43f5e', grad: 'linear-gradient(90deg, #fb7185, #f43f5e)' },
+        { label: 'Medium', color: '#f97316', grad: 'linear-gradient(90deg, #fb923c, #f97316)' },
+        { label: 'Low', color: '#94a3c0', grad: 'linear-gradient(90deg, #b4bcdd, #94a3c0)' },
     ]
     const priorityCounts = priorities.map((p) => ({
         ...p,
@@ -113,7 +113,7 @@ export default function AnalyticsClient({ leads }: { leads: Lead[] }) {
                             <span className="font-data" style={{ fontSize: '13px', fontWeight: 700, marginBottom: '6px', color: 'var(--text-primary)' }}>{b.count}</span>
                             <div className="bar-fill" style={{
                                 width: '100%', maxWidth: '64px', borderRadius: '10px 10px 0 0',
-                                background: b.color, height: mounted ? `${(b.count / maxScoreCount) * 110 + 6}px` : '0px'
+                                background: b.grad, color: b.color, height: mounted ? `${(b.count / maxScoreCount) * 110 + 6}px` : '0px'
                             }} />
                             <span style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '10px' }}>{b.label}</span>
                         </div>
@@ -134,7 +134,7 @@ export default function AnalyticsClient({ leads }: { leads: Lead[] }) {
                             </div>
                             <div style={{ width: '100%', height: '8px', borderRadius: '999px', background: 'var(--border-soft)', overflow: 'hidden' }}>
                                 <div className="priority-fill" style={{
-                                    height: '100%', borderRadius: '999px', background: p.color,
+                                    height: '100%', borderRadius: '999px', background: p.grad,
                                     width: mounted ? `${(p.count / maxPriorityCount) * 100}%` : '0%'
                                 }} />
                             </div>

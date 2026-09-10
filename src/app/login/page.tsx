@@ -171,7 +171,7 @@ function LoginPageInner() {
                                     <label htmlFor="password" style={{ fontSize: "13.5px", fontWeight: 600, color: "#5b6382" }}>
                                         Password
                                     </label>
-                                    <Link href="/forgot-password" style={{ fontSize: "13px", fontWeight: 600, color: "#4f46e5", textDecoration: "none" }}>
+                                    <Link href="/forgot-password" className="link-underline" style={{ fontSize: "13px", fontWeight: 600, color: "#4f46e5", textDecoration: "none" }}>
                                         Forgot password?
                                     </Link>
                                 </div>
@@ -194,7 +194,7 @@ function LoginPageInner() {
                                 </div>
                             )}
 
-                            <button type="submit" disabled={isPending} className="login-btn" style={{
+                            <button type="submit" disabled={isPending} className="login-btn btn-shine" style={{
                                 width: "100%", borderRadius: "13px", border: "none", cursor: "pointer",
                                 background: "linear-gradient(90deg, #5b6ef5 0%, #17b6d4 100%)", color: "white",
                                 fontSize: "15.5px", fontWeight: 700, padding: "14px", marginTop: "6px",
@@ -208,7 +208,7 @@ function LoginPageInner() {
 
                 <p style={{ color: "#5b6382", fontSize: "13.5px", marginTop: "20px" }}>
                     Don&apos;t have an account?{" "}
-                    <Link href="/signup" style={{ color: "#4f46e5", fontWeight: 600, textDecoration: "none" }}>
+                    <Link href="/signup" className="link-underline" style={{ color: "#4f46e5", fontWeight: 600, textDecoration: "none" }}>
                         Sign up
                     </Link>
                 </p>

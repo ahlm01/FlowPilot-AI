@@ -15,8 +15,17 @@
     --accent-tint-strong: #f5f7ff;
     --accent-text: #4f46e5;
     --card-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+    --card-shadow-hover: 0 20px 44px rgba(79, 70, 229, 0.13), 0 4px 12px rgba(15, 23, 42, 0.05);
     --scrollbar-thumb: #d8dcf3;
     --scrollbar-thumb-hover: #a9b1e8;
+
+    /* Shared brand gradient + glow, reused for buttons/icons/accents */
+    --accent-gradient: linear-gradient(135deg, #4f46e5, #17b6d4);
+    --accent-gradient-hover: linear-gradient(135deg, #4338ca, #0ea5c4);
+    --accent-glow: 0 10px 24px rgba(79, 70, 229, 0.28);
+    --accent-glow-strong: 0 14px 32px rgba(79, 70, 229, 0.38);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
     /* Status/priority/score badge colors (Leads table + modal) */
     --badge-danger-bg: #fee2e2;
@@ -51,8 +60,14 @@
     --accent-tint-strong: rgba(91, 110, 245, 0.1);
     --accent-text: #97a1ff;
     --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --card-shadow-hover: 0 20px 48px rgba(0, 0, 0, 0.45), 0 4px 14px rgba(91, 110, 245, 0.12);
     --scrollbar-thumb: #363a4d;
     --scrollbar-thumb-hover: #4a4f68;
+
+    --accent-gradient: linear-gradient(135deg, #5b6ef5, #22d3ee);
+    --accent-gradient-hover: linear-gradient(135deg, #6d7bff, #34e0f5);
+    --accent-glow: 0 10px 26px rgba(91, 110, 245, 0.32);
+    --accent-glow-strong: 0 16px 36px rgba(91, 110, 245, 0.42);
 
     --badge-danger-bg: rgba(244, 63, 94, 0.16);
     --badge-danger-fg: #fca5b1;
@@ -107,6 +122,63 @@ body, .app-bg, .app-sidebar, .mobile-topbar,
   color: var(--text-primary);
 }
 
+/* Crisp, brand-matched keyboard focus ring — visible on every interactive
+   element without relying on each component to define its own. */
+:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   Shared micro-interaction utilities — used across dashboard,
+   analytics, settings, profile and auth pages for consistent
+   hover/press feedback.
+   ============================================================ */
+
+/* Subtle diagonal sheen that sweeps across primary buttons on hover */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.55s var(--ease-smooth);
+  pointer-events: none;
+}
+.btn-shine:hover::before {
+  left: 130%;
+}
+
+/* Gentle lift-on-hover for cards that don't need the full stat-card treatment */
+.hover-lift {
+  transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth);
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Animated underline for text links that shouldn't feel static */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  transition: background-size 0.25s var(--ease-smooth);
+}
+.link-underline:hover {
+  background-size: 100% 1.5px;
+}
+
 /* Slim brand-matched scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -132,6 +204,11 @@ body, .app-bg, .app-sidebar, .mobile-topbar,
    Centralized here instead of duplicated per page so dark mode
    only needs one override.
    ============================================================ */
+@keyframes appBgDrift {
+  0%, 100% { background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
+  50% { background-position: 3% 4%, 97% 5%, 47% 97%, 0 0; }
+}
+
 .app-bg {
   background-color: var(--bg-app);
   background-image:
@@ -140,6 +217,7 @@ body, .app-bg, .app-sidebar, .mobile-topbar,
     radial-gradient(circle at 45% 100%, rgba(167, 139, 250, 0.12) 0%, transparent 48%),
     radial-gradient(circle, #cfd4ea 1.4px, transparent 1.4px);
   background-size: auto, auto, auto, 20px 20px;
+  animation: appBgDrift 26s ease-in-out infinite;
 }
 
 :root[data-theme="dark"] .app-bg {

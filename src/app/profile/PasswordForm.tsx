@@ -61,7 +61,7 @@ export default function PasswordForm() {
             <button
                 type="submit"
                 disabled={isPending}
-                className="pw-btn"
+                className="pw-btn btn-shine"
                 style={{
                     padding: '11px 22px', borderRadius: '12px', border: 'none', width: 'fit-content',
                     background: 'linear-gradient(135deg, #4f46e5, #17b6d4)', color: 'white',

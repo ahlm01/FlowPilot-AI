@@ -93,6 +93,7 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
     const [sortConfig, setSortConfig] = useState<{ key: keyof Lead, direction: 'asc' | 'desc' }>({ key: 'score', direction: 'desc' })
     const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
     const [isUpdating, setIsUpdating] = useState(false)
+    const [hoverPoint, setHoverPoint] = useState<number | null>(null)
 
     const filteredAndSortedLeads = useMemo(() => {
         let filtered = leads.filter(lead => {
@@ -180,18 +181,28 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         @keyframes flowTravel { 0% { left: -8%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: 106%; opacity: 0; } }
         @keyframes drawLine { from { stroke-dashoffset: 800; } to { stroke-dashoffset: 0; } }
+        @keyframes rowFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .lead-row-in { animation: rowFadeIn 0.4s ease both; }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
-        .stat-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-        .stat-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 20px 40px rgba(79, 70, 229, 0.12); }
+        .stat-card { transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth); }
+        .stat-card:hover { transform: translateY(-5px) scale(1.012); box-shadow: var(--card-shadow-hover); }
+        .stat-card-bar {
+          position: absolute; top: 0; left: 18px; right: 18px; height: 3px; border-radius: 0 0 4px 4px;
+          transform: scaleX(0); transform-origin: left; transition: transform 0.35s var(--ease-smooth);
+        }
+        .stat-card:hover .stat-card-bar { transform: scaleX(1); }
         .btn-primary { transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease; }
-        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(79, 70, 229, 0.35); }
-        .view-btn { transition: all 0.2s ease; }
-        .view-btn:hover { background: #4f46e5; color: white; transform: translateX(2px); }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--accent-glow-strong); }
+        .view-btn { transition: all 0.2s var(--ease-smooth); }
+        .view-btn:hover { background: var(--accent-gradient); color: white; transform: translateX(2px); box-shadow: var(--accent-glow); }
         .pulse-dot { animation: pulse 1.5s ease-in-out infinite; }
         .flow-pulse { animation: flowTravel 3s cubic-bezier(0.65,0,0.35,1) infinite; }
         .trend-line { stroke-dasharray: 800; animation: drawLine 1.4s cubic-bezier(0.16,1,0.3,1) both; }
         .nav-item:hover:not(.nav-disabled) { background: var(--accent-tint-strong) !important; }
         .search-input:focus { border-color: #5b6ef5 !important; box-shadow: 0 0 0 3px rgba(91,110,245,0.12); }
+        .trend-point { transition: r 0.2s var(--ease-smooth); cursor: pointer; }
+        .trend-point:hover { r: 6; }
+        .trend-tooltip { transition: opacity 0.15s ease, transform 0.15s var(--ease-smooth); }
 
         @keyframes blobDrift1 { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-16px, 14px) scale(1.08); } }
         @keyframes blobDrift2 { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(12px, -10px) scale(1.12); } }
@@ -281,7 +292,8 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
 
                 {/* Greeting header */}
                 <div className="fade-up welcome-gradient" style={{
-                    borderRadius: '22px', padding: '30px 32px', marginBottom: '24px', position: 'relative', overflow: 'hidden'
+                    borderRadius: '22px', padding: '30px 32px', marginBottom: '24px', position: 'relative', overflow: 'hidden',
+                    boxShadow: '0 18px 40px rgba(67, 56, 202, 0.28)'
                 }}>
                     <div className="glow-blob glow-blob-1" />
                     <div className="glow-blob glow-blob-2" />
@@ -320,6 +332,7 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
                             boxShadow: 'var(--card-shadow)',
                             display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                         }}>
+                            <div className="stat-card-bar" style={{ background: s.grad }} />
                             <div>
                                 <p style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.03em' }}>{s.label}</p>
                                 <p className="font-data" style={{ fontSize: '26px', fontWeight: 700, letterSpacing: '-0.02em' }}><CountUp value={s.value} delay={i * 100 + 200} /></p>
@@ -364,7 +377,24 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
 
                         {points.map((p, i) => (
                             <g key={i}>
-                                <circle cx={p.x} cy={p.y} r="4" fill="var(--surface)" stroke="#4f46e5" strokeWidth="2" />
+                                {hoverPoint === i && (
+                                    <line x1={p.x} y1={p.y} x2={p.x} y2={chartH} stroke="#4f46e5" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+                                )}
+                                <circle
+                                    cx={p.x} cy={p.y} r={hoverPoint === i ? 6 : 4}
+                                    fill="var(--surface)" stroke="#4f46e5" strokeWidth="2"
+                                    className="trend-point"
+                                    onMouseEnter={() => setHoverPoint(i)}
+                                    onMouseLeave={() => setHoverPoint(current => current === i ? null : current)}
+                                />
+                                {hoverPoint === i && (
+                                    <g className="trend-tooltip">
+                                        <rect x={p.x - 24} y={p.y - 34} width="48" height="24" rx="8" fill="var(--text-primary)" opacity="0.92" />
+                                        <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--surface)" fontFamily="-apple-system, sans-serif">
+                                            {p.count}
+                                        </text>
+                                    </g>
+                                )}
                                 <text x={p.x} y={chartH + 20} textAnchor="middle" fontSize="11" fill="var(--text-muted)" fontFamily="-apple-system, sans-serif">
                                     {p.label}
                                 </text>
@@ -450,12 +480,12 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredAndSortedLeads.length > 0 ? filteredAndSortedLeads.map((lead) => {
+                                {filteredAndSortedLeads.length > 0 ? filteredAndSortedLeads.map((lead, i) => {
                                     const pc = priorityColor(lead.priority)
                                     const sc = scoreColor(lead.score)
                                     const stc = statusColor(lead.status)
                                     return (
-                                        <tr key={lead.id} className="lead-row" style={{ borderTop: '1px solid var(--border-soft)' }}>
+                                        <tr key={lead.id} className="lead-row lead-row-in" style={{ borderTop: '1px solid var(--border-soft)', animationDelay: `${Math.min(i, 10) * 35}ms` }}>
                                             <td style={tdStyle}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                                     <div className="lead-avatar" style={{
@@ -631,7 +661,7 @@ export default function DashboardClient({ initialLeads }: { initialLeads: Lead[]
                             <button
                                 onClick={() => handleApproveAndSend(selectedLead)}
                                 disabled={isUpdating || selectedLead.status === 'Sent'}
-                                className="btn-primary"
+                                className="btn-primary btn-shine"
                                 style={{
                                     padding: '11px 22px', borderRadius: '12px', border: 'none',
                                     background: 'linear-gradient(135deg, #4f46e5, #17b6d4)', color: 'white',

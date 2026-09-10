@@ -24,10 +24,13 @@ export default async function ProfilePage() {
         @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
 
-        .profile-card { transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.2s ease; }
-        .profile-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(15,23,42,0.09); }
-        .avatar-ring { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
-        .profile-card:hover .avatar-ring { transform: scale(1.08) rotate(-4deg); }
+        .profile-card { transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth), background-color 0.2s ease; }
+        .profile-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
+        .avatar-ring-wrap {
+          padding: 3px; border-radius: 999px; background: var(--accent-gradient);
+          flex-shrink: 0; transition: transform 0.3s var(--ease-bounce);
+        }
+        .profile-card:hover .avatar-ring-wrap { transform: scale(1.08) rotate(-4deg); }
       `}</style>
             <Sidebar />
             <main className="app-main" style={{ flex: 1, minWidth: 0, padding: '28px 36px 48px', maxWidth: '760px', margin: '0 auto' }}>
@@ -40,13 +43,20 @@ export default async function ProfilePage() {
                     background: 'var(--surface)', borderRadius: '20px', padding: '24px 28px', marginBottom: '20px',
                     boxShadow: 'var(--card-shadow)', display: 'flex', alignItems: 'center', gap: '16px'
                 }}>
-                    <div className="avatar-ring" style={{
-                        height: '54px', width: '54px', borderRadius: '999px',
-                        background: 'linear-gradient(135deg,#4f46e5,#17b6d4)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontWeight: 700, fontSize: '20px', color: 'white', flexShrink: 0
-                    }}>
-                        {user.email?.[0]?.toUpperCase() ?? '?'}
+                    <div className="avatar-ring-wrap">
+                        <div style={{
+                            height: '54px', width: '54px', borderRadius: '999px',
+                            background: 'var(--surface)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                            <span className="font-display" style={{
+                                fontWeight: 700, fontSize: '20px',
+                                background: 'var(--accent-gradient)', WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent', backgroundClip: 'text'
+                            }}>
+                                {user.email?.[0]?.toUpperCase() ?? '?'}
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <p style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>{user.email}</p>

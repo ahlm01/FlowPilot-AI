@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`h-full scroll-smooth antialiased ${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}>
+    <html lang="en" data-theme="light" suppressHydrationWarning className={`h-full scroll-smooth antialiased ${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>

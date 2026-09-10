@@ -193,7 +193,7 @@ function SignupPageInner() {
                                 </div>
                             )}
 
-                            <button type="submit" disabled={isPending} className="login-btn" style={{
+                            <button type="submit" disabled={isPending} className="login-btn btn-shine" style={{
                                 width: "100%", borderRadius: "13px", border: "none", cursor: "pointer",
                                 background: "linear-gradient(90deg, #5b6ef5 0%, #17b6d4 100%)", color: "white",
                                 fontSize: "15.5px", fontWeight: 700, padding: "14px", marginTop: "6px",
@@ -205,7 +205,7 @@ function SignupPageInner() {
 
                         <p style={{ color: "#5b6382", fontSize: "13.5px", marginTop: "20px" }}>
                             Already have an account?{" "}
-                            <Link href="/login" style={{ color: "#4f46e5", fontWeight: 600, textDecoration: "none" }}>
+                            <Link href="/login" className="link-underline" style={{ color: "#4f46e5", fontWeight: 600, textDecoration: "none" }}>
                                 Log in
                             </Link>
                         </p>

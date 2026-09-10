@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useId, useEffect } from 'react'
+import { useState, useId, useLayoutEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { LogOut, Inbox, BarChart3, Settings as SettingsIcon, User, Menu, X, Sun, Moon } from 'lucide-react'
@@ -45,9 +45,23 @@ export default function Sidebar() {
     // mismatch the theme the blocking init script already applied.
     const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
 
-    useEffect(() => {
-        const current = document.documentElement.getAttribute('data-theme')
-        setTheme(current === 'dark' ? 'dark' : 'light')
+    // Re-derives and re-applies the theme (mirroring the blocking init script
+    // in layout.tsx) rather than trusting whatever's on <html> — React's dev
+    // Strict Mode remount clears attributes the inline script set that JSX
+    // doesn't declare. useLayoutEffect (not useEffect) runs before paint so
+    // there's no visible flash on that remount.
+    useLayoutEffect(() => {
+        let resolved: 'light' | 'dark' = 'light'
+        try {
+            const stored = localStorage.getItem('flowpilot-theme')
+            resolved = stored === 'dark' || stored === 'light'
+                ? stored
+                : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        } catch {
+            // localStorage/matchMedia unavailable — fall back to light
+        }
+        document.documentElement.setAttribute('data-theme', resolved)
+        setTheme(resolved)
     }, [])
 
     function toggleTheme() {
@@ -78,6 +92,28 @@ export default function Sidebar() {
         }
         .nav-item:hover .nav-icon {
           transform: scale(1.12);
+        }
+        .nav-item::before {
+          content: '';
+          position: absolute;
+          left: -12px;
+          top: 50%;
+          transform: translateY(-50%) scaleY(0);
+          width: 3px;
+          height: 60%;
+          border-radius: 0 4px 4px 0;
+          background: var(--accent-gradient);
+          transition: transform 0.25s var(--ease-bounce);
+        }
+        .nav-item-active::before {
+          transform: translateY(-50%) scaleY(1);
+        }
+        @keyframes themeIconPop {
+          from { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+          to { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        .theme-icon {
+          animation: themeIconPop 0.35s var(--ease-bounce) both;
         }
         .signout-btn {
           transition: background 0.18s ease, color 0.18s ease;
@@ -160,7 +196,7 @@ export default function Sidebar() {
                                 <Link
                                     key={item.label}
                                     href={item.href}
-                                    className="nav-item"
+                                    className={`nav-item${active ? ' nav-item-active' : ''}`}
                                     onClick={() => setMobileOpen(false)}
                                     style={{
                                         display: 'flex', alignItems: 'center', gap: '10px',
@@ -189,7 +225,7 @@ export default function Sidebar() {
                             color: 'var(--text-muted)', background: 'transparent', border: 'none', cursor: 'pointer', padding: '9px 10px', borderRadius: '10px'
                         }}
                     >
-                        {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+                        {theme === 'dark' ? <Sun key="sun" size={14} className="theme-icon" /> : <Moon key="moon" size={14} className="theme-icon" />}
                         {theme === 'dark' ? 'Light mode' : 'Dark mode'}
                     </button>
                     <form action="/auth/signout" method="post">

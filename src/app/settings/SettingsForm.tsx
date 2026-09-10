@@ -85,12 +85,12 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="save-btn"
+                        className="save-btn btn-shine"
                         style={{
                             padding: '11px 22px', borderRadius: '12px', border: 'none',
                             background: 'linear-gradient(135deg, #4f46e5, #17b6d4)', color: 'white',
                             cursor: isPending ? 'not-allowed' : 'pointer', fontSize: '14px', fontWeight: 700,
-                            opacity: isPending ? 0.6 : 1
+                            opacity: isPending ? 0.6 : 1, boxShadow: '0 6px 16px rgba(79,70,229,0.25)'
                         }}
                     >
                         {isPending ? 'Saving…' : 'Save settings'}
@@ -101,7 +101,7 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
                 </div>
             </form>
 
-            <div className="intake-card" style={{
+            <div className="intake-card hover-lift" style={{
                 marginTop: '28px', padding: '22px 24px', borderRadius: '16px',
                 background: 'linear-gradient(135deg, rgba(79,70,229,0.06), rgba(23,182,212,0.06))',
                 border: '1px solid rgba(79,70,229,0.14)'
@@ -133,15 +133,19 @@ export default function SettingsForm({ initialSettings, userId }: { initialSetti
                         type="button"
                         onClick={handleCopyLink}
                         disabled={!intakeLink}
+                        className="btn-shine"
                         style={{
                             flexShrink: 0, padding: '11px 18px', borderRadius: '12px', border: 'none',
                             background: copied ? '#047857' : 'linear-gradient(135deg, #4f46e5, #17b6d4)',
                             color: 'white', fontSize: '13.5px', fontWeight: 700,
                             cursor: intakeLink ? 'pointer' : 'not-allowed', opacity: intakeLink ? 1 : 0.6,
-                            transition: 'background 0.15s ease'
+                            transition: 'background 0.2s ease, transform 0.15s ease',
+                            transform: copied ? 'scale(1.04)' : 'scale(1)'
                         }}
                     >
-                        {copied ? 'Copied ✓' : 'Copy link'}
+                        <span key={copied ? 'copied' : 'copy'} className="pop-in" style={{ display: 'inline-block' }}>
+                            {copied ? 'Copied ✓' : 'Copy link'}
+                        </span>
                     </button>
                 </div>
             </div>
